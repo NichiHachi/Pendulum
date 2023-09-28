@@ -18,8 +18,12 @@ int main(void){
     sf::RenderWindow window(sf::VideoMode(displayX,displayY), "Nichi Hachi");
     window.setFramerateLimit(1000);
 
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(displayX, displayY);
+    sf::Sprite backgroundSprite(backgroundTexture);
+
     srand (time(NULL));
-    float xStart = (rand()%201-100)/100.0;
+    float xStart = (rand()%101-50)/100.0;
 
     std::vector<Point> points;
     points.push_back(Point(sf::Vector2f(displayX/2,displayY/2)));
@@ -28,13 +32,22 @@ int main(void){
     for(int i=1;i<nbrPendulum+1;i++){
         points.push_back(Point(sf::Vector2f(displayX/2+xStart*length*i,displayY/2-length*i)));
     }
-    
+
+    sf::Image background;
+    background.create(displayX, displayY, sf::Color::Black);
+
+    sf::Vector2f posLastPoint;    
     while(window.isOpen()){
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
         }
-        window.clear(sf::Color::Black);
+
+
+        posLastPoint = points[nbrPendulum].getPos();
+        background.setPixel(posLastPoint.x, posLastPoint.y, sf::Color::Red);
+        backgroundTexture.loadFromImage(background);
+        window.draw(backgroundSprite);
 
         for(int i=0;i<nbrPendulum;i++){
             points[i].pendulumUpdate(points[i+1], length);

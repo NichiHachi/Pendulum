@@ -9,6 +9,7 @@ class Point{
         Point(sf::Vector2f positionPoint);
         void update();
         void fixe();
+        sf::Vector2f getPos();
         void pendulumUpdate(Point& point, int length);
         void draw(Point point, sf::RenderWindow& window);
 };

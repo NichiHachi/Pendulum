@@ -17,12 +17,16 @@ void Point::update(){
         oldPos = pos;
         pos += velocity;
         //Gravity
-        pos.y += 0.0005;
+        pos.y += 0.0008;
     }
 }
 
 void Point::fixe(){
     fixed = true;
+}
+
+sf::Vector2f Point::getPos(){
+    return pos;
 }
 
 void Point::pendulumUpdate(Point& point, int length){
