@@ -1,7 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/PrimitiveType.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include "Point.h"
 
@@ -17,7 +14,7 @@ void Point::update(){
         oldPos = pos;
         pos += velocity;
         //Gravity
-        pos.y += 0.0008;
+        pos.y += 0.0015;
     }
 }
 
@@ -45,7 +42,7 @@ void Point::pendulumUpdate(Point& point, int length){
     point.update();
 }
 
-void Point::draw(Point point, sf::RenderWindow& window){
+void Point::draw(Point point, sf::RenderWindow& window, int nbrPendulum){
     sf::VertexArray line(sf::Lines,2);
     line[0].color = sf::Color::White;
     line[1].color = sf::Color::White;
@@ -54,4 +51,12 @@ void Point::draw(Point point, sf::RenderWindow& window){
     line[1].position = point.pos;
 
     window.draw(line);
+
+    sf::CircleShape circle;
+    int circleRadius = 5;
+    circle.setRadius(circleRadius);
+    circle.setOutlineColor(sf::Color::White);
+    circle.setPosition(point.pos-sf::Vector2f(circleRadius,circleRadius));
+
+    window.draw(circle);
 }
